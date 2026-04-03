@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sort algo visual", "sort algo visual\sort algo visual.csproj", "{4BBDAF6E-A457-4E9A-B349-5ECF1BBA601E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BBDAF6E-A457-4E9A-B349-5ECF1BBA601E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BBDAF6E-A457-4E9A-B349-5ECF1BBA601E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BBDAF6E-A457-4E9A-B349-5ECF1BBA601E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BBDAF6E-A457-4E9A-B349-5ECF1BBA601E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2705B1EF-A022-40E3-A2D9-28DD7D9A462C}
+	EndGlobalSection
+EndGlobal
