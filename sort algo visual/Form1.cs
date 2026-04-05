@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace sort_algo_visual
@@ -17,10 +19,10 @@ namespace sort_algo_visual
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized; // להפתח במסך מלא
-            GenerateNewArray();
+            GenerateNewRandomArray();
         }
 
-        private void GenerateNewArray()
+        private void GenerateNewRandomArray()
         {
             currentArray = new Bar[size];
             for (int i = 0; i < size; i++){
@@ -29,6 +31,35 @@ namespace sort_algo_visual
             }
 
             Shuffle(currentArray);
+            frames = new List<Bar[]>();
+            frames.Add((Bar[])currentArray.Clone());
+            currentFrame = 0;
+            pictureBox1.Invalidate();
+        }
+
+        private void GenerateSortedArray()
+        {
+            currentArray = new Bar[size];
+            for (int i = 0; i < size; i++)
+            {
+                currentArray[i].Value = i + 1;
+                currentArray[i].BarColor = GetRainbowColor(i, size);
+            }
+            frames = new List<Bar[]>();
+            frames.Add((Bar[])currentArray.Clone());
+            currentFrame = 0;
+            pictureBox1.Invalidate();
+        }
+
+
+        private void GenerateReversedArray()
+        {
+            currentArray = new Bar[size];
+            for (int i = 0; i < size; i++)
+            {
+                currentArray[i].Value = size - i;
+                currentArray[i].BarColor = GetRainbowColor(size - i - 1, size);
+            }
             frames = new List<Bar[]>();
             frames.Add((Bar[])currentArray.Clone());
             currentFrame = 0;
@@ -44,13 +75,111 @@ namespace sort_algo_visual
         private void btnReset_Click(object sender, EventArgs e)
         {
             timer1.Stop();
-            GenerateNewArray();
+            GenerateNeededArray();
+        }
+
+        private void GenerateNeededArray()
+        {
+            if (arrType.SelectedItem == null) return;
+            string order = arrType.SelectedItem.ToString();
+            switch (order) { 
+                case "Random":
+                    GenerateNewRandomArray();
+                    break;
+                case "Sorted":
+                    GenerateSortedArray();
+                    break;
+                case "Reversed":
+                    GenerateReversedArray();
+                    break;
+                case "Best Case":
+                    if (cmbAlgorithm.SelectedItem == null) return;
+                    string alg = cmbAlgorithm.SelectedItem.ToString();
+                    switch (alg) { 
+                        case "Bubble Sort":
+                            GenerateSortedArray();
+                            break;
+                        case "Quick Sort":
+                            GenerateSortedArray();
+                            break;
+                        case "Bogo Sort":
+                            GenerateSortedArray();
+                            break;
+                        case "Merge Sort":
+                            GenerateSortedArray();
+                            break;
+                    }
+                    break;
+
+                case "Worst Case":
+                    if (cmbAlgorithm.SelectedItem == null) return;
+                    alg = cmbAlgorithm.SelectedItem.ToString();
+                    switch (alg)
+                    {
+                        case "Bubble Sort":
+                            GenerateReversedArray();
+                            break;
+                        case "Quick Sort":
+                            GenerateSortedArray();
+
+                            for (int i = 0; i < size; i++){
+                                int mid = i / 2;
+                                int temp = currentArray[mid].Value;
+                                currentArray[mid].Value = currentArray[i].Value;
+                                currentArray[i].Value = temp;
+                            }
+
+                            for (int i = 0; i < size; i++)
+                                currentArray[i].BarColor = GetRainbowColor(currentArray[i].Value - 1, size);
+
+                            frames = new List<Bar[]>();
+                            frames.Add((Bar[])currentArray.Clone());
+                            currentFrame = 0;
+                            pictureBox1.Invalidate();
+
+                            break;
+                        case "Bogo Sort":
+                            GenerateNewRandomArray();
+                            break;
+                        case "Merge Sort":
+                            currentArray = new Bar[size];
+
+                            
+                            for (int i = 0; i < size; i++){
+                                currentArray[i].Value = i + 1;
+                                currentArray[i].BarColor = GetRainbowColor(i, size);
+                            }
+
+                            MergeSortWorstCaseEzer(currentArray);
+                            void MergeSortWorstCaseEzer(Bar[] arr){
+                                    if (arr.Length <= 1) return;
+
+                                    Bar[] left = arr.Where((val, index) => index % 2 == 0).ToArray();
+                                    Bar[] right = arr.Where((val, index) => index % 2 != 0).ToArray();
+
+                                MergeSortWorstCaseEzer(left);
+                                MergeSortWorstCaseEzer(right);
+                                    left.CopyTo(arr, 0);
+                                    right.CopyTo(arr, left.Length);
+                            }
+                            frames = new List<Bar[]>();
+                            frames.Add((Bar[])currentArray.Clone());
+                            currentFrame = 0;
+                            pictureBox1.Invalidate();
+                            break;
+                    }
+                    break;
+            }
+
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (cmbAlgorithm.SelectedItem == null) return;
             string alg = cmbAlgorithm.SelectedItem.ToString();
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
             switch (alg){
                 case "Bubble Sort":
@@ -70,9 +199,15 @@ namespace sort_algo_visual
                     frames = new MergeSortAlg().Sort(currentArray);
                     break;
             }
+            sw.Stop();
+            if (frames.Count < 10000)
+                timeandaction.Text = $"Time: {sw.Elapsed.TotalMilliseconds} ms, Actions: {frames.Count}";
+            else
+                timeandaction.Text = $"Bogo sort took too much time!";
 
+            // החלק של האנימציה, לא קשור למדידת הזמן
             currentFrame = 0;
-            timer1.Start();
+            timer1.Start(); 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -143,8 +278,14 @@ namespace sort_algo_visual
         {
             size = trackBar1.Value;
             timer1.Stop();
-            GenerateNewArray();
+            GenerateNeededArray();
 
+        }
+
+        private void arrType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            timer1.Stop(); 
+            GenerateNeededArray();
         }
     }
 }

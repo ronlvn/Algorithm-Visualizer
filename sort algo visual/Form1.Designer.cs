@@ -41,6 +41,8 @@
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.arrType = new System.Windows.Forms.ComboBox();
+            this.timeandaction = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.lblSpeed = new System.Windows.Forms.Label();
@@ -61,7 +63,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 60);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(800, 390);
+            this.pictureBox1.Size = new System.Drawing.Size(1588, 524);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -69,6 +71,8 @@
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.LightGray;
+            this.topPanel.Controls.Add(this.arrType);
+            this.topPanel.Controls.Add(this.timeandaction);
             this.topPanel.Controls.Add(this.trackBar1);
             this.topPanel.Controls.Add(this.label1);
             this.topPanel.Controls.Add(this.lblSpeed);
@@ -79,12 +83,36 @@
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(800, 60);
+            this.topPanel.Size = new System.Drawing.Size(1588, 60);
             this.topPanel.TabIndex = 1;
+            // 
+            // arrType
+            // 
+            this.arrType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.arrType.FormattingEnabled = true;
+            this.arrType.Items.AddRange(new object[] {
+            "Sorted",
+            "Reversed",
+            "Random",
+            "Best Case",
+            "Worst Case"});
+            this.arrType.Location = new System.Drawing.Point(356, 18);
+            this.arrType.Name = "arrType";
+            this.arrType.Size = new System.Drawing.Size(120, 21);
+            this.arrType.TabIndex = 8;
+            this.arrType.SelectedIndexChanged += new System.EventHandler(this.arrType_SelectedIndexChanged);
+            // 
+            // timeandaction
+            // 
+            this.timeandaction.AutoSize = true;
+            this.timeandaction.Location = new System.Drawing.Point(1585, 21);
+            this.timeandaction.Name = "timeandaction";
+            this.timeandaction.Size = new System.Drawing.Size(0, 13);
+            this.timeandaction.TabIndex = 7;
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(629, 9);
+            this.trackBar1.Location = new System.Drawing.Point(732, 9);
             this.trackBar1.Maximum = 100;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
@@ -96,7 +124,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(576, 21);
+            this.label1.Location = new System.Drawing.Point(691, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 5;
@@ -105,7 +133,7 @@
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(365, 22);
+            this.lblSpeed.Location = new System.Drawing.Point(482, 21);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(47, 13);
             this.lblSpeed.TabIndex = 0;
@@ -113,7 +141,7 @@
             // 
             // tbSpeed
             // 
-            this.tbSpeed.Location = new System.Drawing.Point(420, 12);
+            this.tbSpeed.Location = new System.Drawing.Point(535, 9);
             this.tbSpeed.Maximum = 100;
             this.tbSpeed.Minimum = 1;
             this.tbSpeed.Name = "tbSpeed";
@@ -163,7 +191,7 @@
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1588, 584);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.topPanel);
             this.Name = "Form1";
@@ -181,6 +209,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label timeandaction;
+        private System.Windows.Forms.ComboBox arrType;
     }
 }
 

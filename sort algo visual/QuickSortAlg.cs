@@ -25,6 +25,10 @@ namespace sort_algo_visual
 
         private int Partition(Bar[] arr, int low, int high)// הפיווט הוא האיבר האחרון
         {
+            int mid = low + (high - low) / 2;
+
+            Swap(arr, mid, high);
+
             int pivot = arr[high].Value;
             int i = low-1;
             for (int j = low; j <= high - 1; j++){
