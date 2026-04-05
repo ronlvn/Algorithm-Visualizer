@@ -209,7 +209,7 @@ namespace sort_algo_visual
             currentFrame = 0;
             timer1.Start(); 
         }
-
+          
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (currentFrame < frames.Count - 1){
