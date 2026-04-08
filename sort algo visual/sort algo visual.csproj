@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayGenLogic.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="BogoSortAlg.cs" />
     <Compile Include="BubbleSortAlg.cs" />
