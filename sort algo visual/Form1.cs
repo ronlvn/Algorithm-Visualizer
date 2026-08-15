@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sort_algo_visual.sorts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,8 +11,6 @@ namespace sort_algo_visual
 {
     public partial class Form1 : Form
     {
-
-
         public Form1()
         {
             InitializeComponent();
@@ -46,6 +45,8 @@ namespace sort_algo_visual
                     ArrayGenLogic.GenerateReversedArray();
                     pictureBox1.Invalidate();
                     break;
+
+
                 case "Best Case":
                     if (cmbAlgorithm.SelectedItem == null) return;
                     string alg = cmbAlgorithm.SelectedItem.ToString();
@@ -66,8 +67,13 @@ namespace sort_algo_visual
                             ArrayGenLogic.GenerateSortedArray();
                             pictureBox1.Invalidate();
                             break;
+                        case "Heap Sort":
+                            ArrayGenLogic.GenerateNewRandomArray();
+                            pictureBox1.Invalidate();
+                            break;
                     }
                     break;
+
 
                 case "Worst Case":
                     if (cmbAlgorithm.SelectedItem == null) return;
@@ -129,6 +135,10 @@ namespace sort_algo_visual
                             currentFrame = 0;
                             pictureBox1.Invalidate();
                             break;
+                        case "Heap Sort":
+                            ArrayGenLogic.GenerateSortedArray();
+                            pictureBox1.Invalidate();
+                            break;
                     }
                     break;
             }
@@ -160,12 +170,15 @@ namespace sort_algo_visual
                 case "Merge Sort":
                     frames = new MergeSortAlg().Sort(currentArray);
                     break;
+                case "Heap Sort":
+                    frames = new HeapSortAlg().Sort(currentArray);
+                    break;
             }
             sw.Stop();
             if (frames.Count < 10000)
                 timeandaction.Text = $"Time: {sw.Elapsed.TotalMilliseconds} ms, Actions: {frames.Count}";
             else
-                timeandaction.Text = $"Bogo sort took too much time!";
+                timeandaction.Text = $"Bogo sort took too much time!"; // אחרים לא יגיעו למעל 10000 אז בהערה מופיע רק בוגו סורט
 
             // החלק של האנימציה, לא קשור למדידת הזמן
             currentFrame = 0;
@@ -178,7 +191,8 @@ namespace sort_algo_visual
                 currentFrame++;
                 pictureBox1.Invalidate();
             }
-            else { timer1.Stop();
+            else {
+                timer1.Stop();
             }
         }
 
@@ -192,14 +206,12 @@ namespace sort_algo_visual
             float gap = 5.0f;
             float barWidth = Math.Max(1, stepWidth - gap);
 
-            for (int i = 0; i < frame.Length; i++)
-            {
+            for (int i = 0; i < frame.Length; i++){
                 int barHeight = (int)(((float)frame[i].Value / frame.Length) * (pictureBox1.Height - 40));
                 float x = (i * stepWidth) + (gap / 2);
                 float y = pictureBox1.Height - barHeight;
 
-                using (SolidBrush brush = new SolidBrush(frame[i].BarColor))
-                {
+                using (SolidBrush brush = new SolidBrush(frame[i].BarColor)){
                     e.Graphics.FillRectangle(brush, x, y, barWidth, barHeight);
                 }
             }
@@ -207,7 +219,7 @@ namespace sort_algo_visual
 
         private void tbSpeed_Scroll(object sender, EventArgs e)
         {
-            timer1.Interval = 101 - tbSpeed.Value;
+            timer1.Interval = 101 - tbSpeed.Value; // 101 שלא יהיה אפס
         }
 
         
